@@ -909,7 +909,7 @@
 /* ╔══════════════════════════════════════════════════════╗
    ║  PROMIJENI OVU VARIJABLU ZA TRENUTNU FAZU (1-9)    ║
    ╚══════════════════════════════════════════════════════╝ */
-const CURRENT_PHASE = 1;
+const CURRENT_PHASE = 3;
 
 /* ── DEV PROGRESS BAR ────────────────────────────────── */
 (function() {
@@ -949,7 +949,7 @@ const CURRENT_PHASE = 1;
   fill.style.width = maxW;
 
   // subtitle
-  var currentLabel = phases[CURRENT_PHASE - 3];
+  var currentLabel = phases[CURRENT_PHASE - 1];
   sub.innerHTML =
     '<span data-lang-inline="en">Phase <strong>' + CURRENT_PHASE + ' of 9</strong> — ' + currentLabel.en + '</span>' +
     '<span data-lang-inline="hr">Faza <strong>' + CURRENT_PHASE + ' od 9</strong> — ' + currentLabel.hr + '</span>';
