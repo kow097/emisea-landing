@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EmiSea – EU MRV/ETS & FuelEU Compliance Platform</title>
+<meta name="description" content="EmiSea automates EU MRV reporting, ETS allowance calculations, and FuelEU Maritime compliance for shipping companies. Generate Annex II reports, submit to THETIS-MRV, and track GHG emissions — online and offline.">
+<meta name="keywords" content="EU MRV, ETS shipping, FuelEU Maritime, THETIS-MRV, Annex II report, maritime compliance, ship emissions, IMO MRV, EU ETS shipping, GHG emissions shipping, brodska sukladnost, MRV izvještaj">
+<meta name="author" content="EmiSea">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://emisea.eu/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://emisea.eu/">
+<meta property="og:title" content="EmiSea – EU MRV/ETS & FuelEU Compliance Platform for Shipping">
+<meta property="og:description" content="Automate EU MRV reporting, ETS calculations, and FuelEU Maritime compliance. From voyage data entry to verified THETIS-MRV submission — all in one platform.">
+<meta property="og:image" content="https://emisea.eu/og-image.png">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="EmiSea">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="EmiSea – EU MRV/ETS & FuelEU Compliance Platform">
+<meta name="twitter:description" content="Automate EU MRV reporting, ETS calculations, and FuelEU Maritime compliance for shipping companies.">
+<meta name="twitter:image" content="https://emisea.eu/og-image.png">
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:       #1e3a58;
+    --navy-mid:   #274a6e;
+    --teal:       #0d9488;
+    --teal-light: #14b8a6;
+    --teal-glow:  rgba(13,148,136,0.15);
+    --sky:        #38bdf8;
+    --white:      #eef6ff;
+    --muted:      #92aec8;
+    --card:       rgba(30,58,88,0.88);
+    --border:     rgba(13,148,136,0.30);
+    --gold:       #f59e0b;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Outfit', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; }
+
+  /* ══ NAVBAR ══════════════════════════════════════════════ */
+  .lang-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; align-items: center; padding: 0 2rem; height: 58px;
+    background: rgba(52,90,128,0.97); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo-nav { display: flex; align-items: center; margin-right: 3rem; }
+  .logo-nav img { height: 40px; width: auto; }
+  .lang-bar nav { display: flex; align-items: center; gap: 2rem; margin-right: auto; }
+  .lang-bar nav a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+  .lang-bar nav a:hover { color: var(--white); }
+  .lang-btns { display: flex; gap: 0.4rem; }
+  .lang-btn {
+    padding: 0.28rem 0.75rem; border-radius: 4px; border: 1px solid var(--border);
+    background: transparent; color: var(--muted); font-size: 0.78rem; cursor: pointer;
+    transition: all 0.2s; font-family: 'Outfit', sans-serif;
+  }
+  .lang-btn.active, .lang-btn:hover { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .btn-demo {
+    margin-left: 1.2rem; padding: 0.45rem 1.2rem; background: var(--teal); color: #fff;
+    border: none; border-radius: 6px; font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.2s;
+  }
+  .btn-demo:hover { background: var(--teal-light); transform: translateY(-1px); }
+
+  /* ══ HERO ════════════════════════════════════════════════ */
+  .hero { min-height: 100vh; padding-top: 58px; display: flex; align-items: center; position: relative; overflow: hidden; }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(13,148,136,0.11) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(56,189,248,0.07) 0%, transparent 50%),
+      linear-gradient(160deg, #1e3a58 0%, #223f62 50%, #1a3350 100%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0; opacity: 0.035;
+    background-image: linear-gradient(var(--teal) 1px, transparent 1px), linear-gradient(90deg, var(--teal) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-ship {
+    position: absolute; right: 0; bottom: 0; width: 55%; height: 80%;
+    background: url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1200&q=80') center/cover no-repeat;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%), linear-gradient(to top, transparent 0%, black 20%);
+    mask-image: linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%), linear-gradient(to top, transparent 0%, black 20%);
+    mask-composite: intersect; -webkit-mask-composite: source-in;
+    opacity: 0.32; z-index: 0;
+  }
+  .hero-content {
+    position: relative; z-index: 1; max-width: 1200px;
+    margin: 0 auto; padding: 3rem 2rem; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.4rem 1rem; border-radius: 100px;
+    border: 1px solid var(--border); background: var(--teal-glow);
+    font-size: 0.78rem; color: var(--teal-light); margin-bottom: 1.5rem; width: fit-content;
+    animation: fadeUp 0.6s ease both;
+  }
+  .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal-light); flex-shrink: 0; animation: pulse 2s infinite; }
+  @keyframes pulse  { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+
+  h1 { font-weight: 800; font-size: clamp(2.2rem, 4vw, 3.4rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.2rem; animation: fadeUp 0.6s 0.1s ease both; }
+  h1 em { font-style: normal; color: var(--teal-light); }
+  .hero-sub { font-size: 1.05rem; line-height: 1.7; color: var(--muted); max-width: 480px; margin-bottom: 2rem; font-weight: 300; animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s ease both; }
+
+  .btn-primary { padding: 0.85rem 2rem; background: var(--teal); color: #fff; border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 600; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.25s; box-shadow: 0 0 28px rgba(13,148,136,0.4); }
+  .btn-primary:hover { background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 0 40px rgba(13,148,136,0.6); }
+  .btn-secondary { padding: 0.85rem 2rem; background: transparent; color: var(--white); border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.25s; font-weight: 500; }
+  .btn-secondary:hover { border-color: var(--teal); color: var(--teal-light); }
+
+  /* CALCULATOR CARD */
+  .hero-card { background: var(--card); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; animation: fadeUp 0.6s 0.35s ease both; }
+  .hero-card h3 { font-size: 0.82rem; font-weight: 700; color: var(--teal-light); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+  .calc-row { display: flex; flex-direction: column; gap: 1rem; }
+  .calc-field label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 0.4rem; font-weight: 500; }
+  .fuel-input-wrap { display: flex; flex-direction: column; gap: 0.5rem; }
+  .fuel-slider-row { display: flex; align-items: center; gap: 0.8rem; }
+  .fuel-slider-row input[type=range] { flex: 1; accent-color: var(--teal); cursor: pointer; }
+  .fuel-number-input { width: 80px; padding: 0.35rem 0.6rem; text-align: right; background: rgba(17,32,56,0.9); border: 1px solid var(--border); border-radius: 7px; color: var(--teal-light); font-size: 0.92rem; font-weight: 700; font-family: 'Outfit', sans-serif; outline: none; transition: border 0.2s; -moz-appearance: textfield; }
+  .fuel-number-input::-webkit-outer-spin-button, .fuel-number-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .fuel-number-input:focus { border-color: var(--teal); }
+  .fuel-hint { font-size: 0.72rem; color: var(--muted); opacity: 0.75; }
+  .calc-field select { width: 100%; padding: 0.6rem 0.9rem; background: rgba(17,32,56,0.9); border: 1px solid var(--border); border-radius: 8px; color: var(--white); font-size: 0.9rem; font-family: 'Outfit', sans-serif; outline: none; transition: border 0.2s; }
+  .calc-field select:focus { border-color: var(--teal); }
+  .calc-field select option { background: var(--navy-mid); }
+  .calc-result { margin-top: 0.4rem; padding: 1.2rem; background: rgba(13,148,136,0.08); border: 1px solid var(--border); border-radius: 10px; }
+  .result-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.85rem; }
+  .result-row span:first-child { color: var(--muted); }
+  .result-row span:last-child { font-weight: 600; }
+  .result-total { display: flex; justify-content: space-between; align-items: center; padding-top: 0.8rem; border-top: 1px solid var(--border); margin-top: 0.5rem; }
+  .result-total span:first-child { font-size: 0.85rem; color: var(--muted); }
+  .result-total strong { font-size: 1.5rem; font-weight: 800; color: var(--teal-light); }
+
+  /* ══ TRUST BAR ═══════════════════════════════════════════ */
+  .trust-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1.2rem 2rem; background: rgba(26,47,74,0.5); }
+  .trust-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+  .trust-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; color: var(--muted); }
+  .trust-item svg { color: var(--teal); width: 18px; height: 18px; flex-shrink: 0; }
+
+  /* ══ GENERIC SECTION ═════════════════════════════════════ */
+  section { padding: 6rem 2rem; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-label { font-size: 0.73rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.8rem; }
+  .section-title { font-weight: 800; font-size: clamp(1.8rem, 3vw, 2.6rem); line-height: 1.15; margin-bottom: 1rem; }
+  .section-sub { color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 580px; font-weight: 300; }
+
+  /* ══ PLANS (Tracker vs Compliance) ═══════════════════════ */
+  .plans-section { background: var(--navy-mid); }
+  .plans-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3.5rem; }
+  .plan-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 2.2rem; position: relative; overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .plan-card:hover { border-color: var(--teal); box-shadow: 0 12px 40px rgba(13,148,136,0.15); }
+  .plan-card.featured { border-color: var(--teal); box-shadow: 0 0 40px rgba(13,148,136,0.15); }
+  .plan-card.featured::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--teal), var(--sky), var(--teal)); }
+  .plan-badge { display: inline-block; padding: 0.25rem 0.8rem; border-radius: 100px; background: var(--teal-glow); border: 1px solid var(--border); font-size: 0.72rem; color: var(--teal-light); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+  .plan-badge.hot { background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.3); color: var(--gold); }
+  .plan-card h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .plan-card .plan-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.6rem; font-weight: 300; }
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; }
+  .plan-features li { display: flex; align-items: flex-start; gap: 0.7rem; font-size: 0.88rem; line-height: 1.4; }
+  .plan-features li .check { color: var(--teal); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .plan-features li .cross { color: var(--muted); flex-shrink: 0; margin-top: 1px; }
+  .plan-features li.muted-item { color: var(--muted); }
+  .plan-addons { margin-top: 1.2rem; padding-top: 1.2rem; border-top: 1px solid var(--border); }
+  .plan-addons p { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 0.8rem; }
+  .addon-tag { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.8rem; border-radius: 6px; background: var(--teal-glow); border: 1px solid var(--border); font-size: 0.8rem; color: var(--teal-light); margin: 0.2rem; }
+
+  /* ══ FEATURES ════════════════════════════════════════════ */
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin-top: 3.5rem; align-items: start; }
+  .feature-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.6rem 1.8rem 1.8rem; transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s; position: relative; overflow: hidden; cursor: default; }
+  .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--teal), transparent); opacity: 0; transition: opacity 0.3s; }
+  .feature-card:hover { border-color: var(--teal); transform: translateY(-3px); box-shadow: 0 12px 36px rgba(13,148,136,0.15); }
+  .feature-card:hover::before { opacity: 1; }
+  .feature-icon { width: 44px; height: 44px; border-radius: 10px; background: var(--teal-glow); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: var(--teal-light); }
+  .feature-icon svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .feature-card h4 { font-weight: 700; font-size: 1rem; margin-bottom: 0; }
+  .feature-card .fc-body { font-size: 0.87rem; color: var(--muted); line-height: 1.6; font-weight: 300; overflow: hidden; opacity: 0; max-height: 0; margin-top: 0; transition: max-height 0.38s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease, margin-top 0.28s ease; }
+  .feature-card:hover .fc-body { max-height: 130px; opacity: 1; margin-top: 0.65rem; }
+  .feature-tag { display: inline-block; margin-top: 0.5rem; padding: 0.18rem 0.6rem; border-radius: 4px; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  .feature-tag.compliance { background: rgba(13,148,136,0.15); color: var(--teal-light); }
+  .feature-tag.tracker { background: rgba(56,189,248,0.12); color: var(--sky); }
+  .feature-tag.premium { background: rgba(245,158,11,0.12); color: var(--gold); }
+  .feature-tag.all { background: rgba(13,148,136,0.1); color: var(--muted); }
+
+  /* ══ HOW IT WORKS ════════════════════════════════════════ */
+  .how-section { background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy) 100%); }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 3.5rem; position: relative; }
+  .steps::before { content: ''; position: absolute; top: 28px; left: 10%; right: 10%; height: 1px; background: linear-gradient(90deg, transparent, var(--teal), transparent); opacity: 0.35; }
+  .step { text-align: center; }
+  .step-num { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--teal) 0%, rgba(13,148,136,0.28) 100%); border: 1px solid var(--teal); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; font-weight: 800; font-size: 1.1rem; }
+  .step h4 { font-weight: 700; margin-bottom: 0.5rem; }
+  .step p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+
+  /* ══ COMPLIANCE BADGES ═══════════════════════════════════ */
+  .compliance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 3rem; }
+  .compliance-badges { display: flex; flex-direction: column; gap: 0.9rem; }
+  .badge-item { display: flex; align-items: flex-start; gap: 1.1rem; padding: 1.1rem 1.4rem; background: var(--card); border: 1px solid var(--border); border-radius: 12px; transition: border-color 0.28s, box-shadow 0.28s; cursor: default; overflow: hidden; }
+  .badge-item:hover { border-color: var(--teal); box-shadow: 0 8px 28px rgba(13,148,136,0.12); }
+  .badge-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 4px; box-shadow: 0 0 8px var(--teal); transition: box-shadow 0.3s, background 0.3s; }
+  .badge-item:hover .badge-dot { box-shadow: 0 0 14px var(--teal-light); background: var(--teal-light); }
+  .badge-text h5 { font-weight: 700; font-size: 0.92rem; margin-bottom: 0; }
+  .badge-text .bdesc { font-size: 0.8rem; color: var(--muted); font-weight: 300; line-height: 1.55; max-height: 0; overflow: hidden; opacity: 0; margin-top: 0; transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease, margin-top 0.28s ease; }
+  .badge-item:hover .badge-text .bdesc { max-height: 80px; opacity: 1; margin-top: 0.35rem; }
+
+  /* ══ ROLES SECTION ═══════════════════════════════════════ */
+  .roles-section { background: var(--navy-mid); }
+  .roles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 3rem; }
+  .role-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem; text-align: center; transition: border-color 0.25s, transform 0.25s; }
+  .role-card:hover { border-color: var(--teal); transform: translateY(-2px); }
+  .role-icon { width: 44px; height: 44px; margin: 0 auto 0.7rem; color: var(--teal-light); }
+  .role-icon svg { width: 100%; height: 100%; }
+  .role-card h4 { font-size: 0.9rem; font-weight: 700; color: var(--teal-light); margin-bottom: 0.4rem; }
+  .role-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; font-weight: 300; }
+
+  /* ══ PRICING ═════════════════════════════════════════════ */
+  .pricing-section { background: var(--navy); }
+  .pricing-card { max-width: 620px; margin: 3.5rem auto 0; background: var(--card); border: 1px solid var(--teal); border-radius: 20px; padding: 3rem; text-align: center; box-shadow: 0 0 60px rgba(13,148,136,0.14); position: relative; overflow: hidden; }
+  .pricing-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--teal), var(--sky), var(--teal)); }
+  .pricing-card h3 { font-size: 2rem; font-weight: 800; margin-bottom: 0.8rem; }
+  .pricing-card p.desc { color: var(--muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 2rem; font-weight: 300; }
+  .pricing-features { list-style: none; text-align: left; margin-bottom: 2.5rem; display: flex; flex-direction: column; gap: 0.8rem; }
+  .pricing-features li { display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; }
+  .pricing-features li::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; }
+  .pricing-cta { display: flex; flex-direction: column; gap: 1rem; }
+  .btn-large { padding: 1rem 3rem; font-size: 1rem; font-weight: 700; width: 100%; border-radius: 10px; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.25s; }
+  .btn-large.primary { background: var(--teal); color: #fff; border: none; box-shadow: 0 0 28px rgba(13,148,136,0.5); }
+  .btn-large.primary:hover { background: var(--teal-light); box-shadow: 0 0 48px rgba(13,148,136,0.7); transform: translateY(-2px); }
+  .btn-large.secondary { background: transparent; color: var(--white); border: 1px solid var(--border); }
+  .btn-large.secondary:hover { border-color: var(--teal); color: var(--teal-light); }
+  .pricing-note { font-size: 0.78rem; color: var(--muted); margin-top: 1rem; }
+
+  /* ══ CONTACT ═════════════════════════════════════════════ */
+  .cta-section { background: linear-gradient(135deg, rgba(13,148,136,0.1) 0%, transparent 60%); border-top: 1px solid var(--border); text-align: center; }
+  .cta-section .section-title { margin-bottom: 1rem; }
+  .cta-section .section-sub { margin: 0 auto 2.5rem; }
+  .contact-form { max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-field label { font-size: 0.78rem; color: var(--muted); font-weight: 500; text-align: left; }
+  .form-field input, .form-field select, .form-field textarea { padding: 0.75rem 1rem; background: var(--card); border: 1px solid var(--border); border-radius: 8px; color: var(--white); font-size: 0.9rem; font-family: 'Outfit', sans-serif; outline: none; transition: border 0.2s; }
+  .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--teal); }
+  .form-field textarea { resize: vertical; min-height: 100px; }
+  .form-field select option { background: var(--navy-mid); }
+  .form-success { display: none; padding: 1.5rem; background: rgba(13,148,136,0.1); border: 1px solid var(--teal); border-radius: 12px; color: var(--teal-light); font-size: 0.95rem; }
+
+  /* ══ FOOTER ══════════════════════════════════════════════ */
+  footer { border-top: 1px solid var(--border); padding: 2rem; background: rgba(24,46,72,0.98); }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-logo { display: flex; align-items: center; }
+  .footer-logo img { height: 32px; width: auto; }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--teal-light); }
+  .footer-copy { font-size: 0.78rem; color: var(--muted); }
+
+  /* ══ DEV PROGRESS BAR ═══════════════════════════════════ */
+  .dev-progress { border-bottom: 1px solid var(--border); padding: 2.2rem 2rem; background: rgba(26,47,74,0.55); }
+  .dev-progress-inner { max-width: 1200px; margin: 0 auto; }
+  .dev-progress-label { font-size: 0.73rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.3rem; text-align: center; }
+  .dev-progress-sub { font-size: 0.78rem; color: var(--muted); text-align: center; margin-bottom: 1.6rem; font-weight: 300; }
+  .dev-progress-sub strong { color: var(--teal-light); font-weight: 700; }
+  .progress-track { position: relative; display: flex; justify-content: space-between; align-items: flex-start; }
+  .progress-line-bg { position: absolute; top: 16px; left: 24px; right: 24px; height: 3px; background: rgba(13,148,136,0.18); border-radius: 2px; z-index: 0; }
+  .progress-line-fill { position: absolute; top: 16px; left: 24px; height: 3px; background: linear-gradient(90deg, var(--teal), var(--teal-light)); border-radius: 2px; z-index: 1; transition: width 0.6s ease; }
+  .progress-step { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 2; flex: 1; min-width: 0; }
+  .progress-dot { width: 33px; height: 33px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 800; border: 2px solid rgba(13,148,136,0.25); background: var(--navy); color: var(--muted); transition: all 0.35s ease; flex-shrink: 0; }
+  .progress-step.done .progress-dot { background: var(--teal); border-color: var(--teal); color: #fff; box-shadow: 0 0 12px rgba(13,148,136,0.4); }
+  .progress-step.active .progress-dot { background: var(--navy); border-color: var(--teal-light); color: var(--teal-light); box-shadow: 0 0 18px rgba(13,148,136,0.5); animation: pulseRing 2s infinite; }
+  @keyframes pulseRing { 0%,100%{box-shadow:0 0 12px rgba(13,148,136,0.4)} 50%{box-shadow:0 0 22px rgba(13,148,136,0.7)} }
+  .progress-step-label { margin-top: 0.5rem; font-size: 0.62rem; color: var(--muted); text-align: center; line-height: 1.3; font-weight: 500; max-width: 80px; word-wrap: break-word; transition: color 0.3s; }
+  .progress-step.done .progress-step-label { color: var(--teal-light); }
+  .progress-step.active .progress-step-label { color: var(--white); font-weight: 700; }
+
+  /* mobile: horizontal scroll */
+  @media (max-width: 700px) {
+    .progress-track { overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 0; padding-bottom: 0.5rem; scrollbar-width: none; }
+    .progress-track::-webkit-scrollbar { display: none; }
+    .progress-step { min-width: 70px; flex: 0 0 70px; }
+    .progress-line-bg, .progress-line-fill { display: none; }
+    .dev-progress { padding: 1.6rem 1rem; }
+  }
+
+  /* ══ DEV ROADMAP DROPDOWN ═════════════════════════════ */
+  .roadmap-toggle { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 1.4rem; cursor: pointer; -webkit-user-select: none; user-select: none; padding: 0.5rem 1.2rem; border-radius: 8px; border: 1px solid var(--border); background: rgba(13,148,136,0.05); width: fit-content; margin-left: auto; margin-right: auto; transition: border-color 0.25s, background 0.25s; }
+  .roadmap-toggle:hover { border-color: var(--teal); background: rgba(13,148,136,0.1); }
+  .roadmap-toggle span { font-size: 0.78rem; color: var(--muted); font-weight: 600; }
+  .roadmap-toggle .chevron { width: 14px; height: 14px; color: var(--muted); transition: transform 0.3s ease; flex-shrink: 0; }
+  .roadmap-toggle.open .chevron { transform: rotate(180deg); }
+  .roadmap-toggle.open span { color: var(--teal-light); }
+  .roadmap-panel { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease; opacity: 0; }
+  .roadmap-panel.open { opacity: 1; }
+  .roadmap-list { list-style: none; max-width: 700px; margin: 1.2rem auto 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .roadmap-list li { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.82rem; line-height: 1.5; color: var(--muted); font-weight: 300; padding: 0.45rem 0.8rem; border-radius: 6px; transition: background 0.2s; }
+  .roadmap-list li:hover { background: rgba(13,148,136,0.06); }
+  .roadmap-list li .rm-num { font-weight: 800; color: var(--teal); min-width: 18px; flex-shrink: 0; }
+  .roadmap-list li.rm-done { color: var(--teal-light); opacity: 0.7; }
+  .roadmap-list li.rm-done .rm-num { color: var(--teal-light); }
+  .roadmap-list li.rm-active { color: var(--white); font-weight: 500; }
+  .roadmap-list li.rm-active .rm-num { color: var(--teal-light); }
+
+  /* ══ I18N ════════════════════════════════════════════════ */
+  [data-lang] { display: none; }
+  .lang-en [data-lang="en"] { display: block; }
+  .lang-hr [data-lang="hr"] { display: block; }
+  [data-lang-inline] { display: none; }
+  .lang-en [data-lang-inline="en"] { display: inline; }
+  .lang-hr [data-lang-inline="hr"] { display: inline; }
+
+  /* ══ RESPONSIVE ══════════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .hero-content    { grid-template-columns: 1fr; gap: 2rem; padding: 2rem; }
+    .hero-ship       { display: none; }
+    .compliance-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .plans-grid      { grid-template-columns: 1fr; }
+    .steps::before   { display: none; }
+    .form-row        { grid-template-columns: 1fr; }
+    .lang-bar nav    { display: none; }
+  }
+  @media (max-width: 600px) {
+    .hero-card       { padding: 1.4rem; }
+    .hero-card h3    { font-size: 0.75rem; margin-bottom: 1.2rem; }
+    .fuel-slider-row { flex-direction: column; align-items: stretch; gap: 0.6rem; }
+    .fuel-number-input { width: 100%; text-align: left; font-size: 1rem; padding: 0.5rem 0.8rem; }
+    .fuel-hint       { font-size: 0.68rem; }
+    .result-row      { flex-direction: column; gap: 0.15rem; margin-bottom: 0.8rem; }
+    .result-row span:last-child { font-size: 1rem; }
+    .result-total    { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
+    .result-total strong { font-size: 1.8rem; }
+    .trust-inner     { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 0 0.5rem; }
+    section          { padding: 4rem 1.2rem; }
+    .lang-bar        { padding: 0 1rem; }
+    .btn-demo        { padding: 0.4rem 0.9rem; font-size: 0.8rem; }
+    .logo-nav img    { height: 40px; }
+    .roles-grid      { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body class="lang-en">
+
+<!-- NAVBAR -->
+<div class="lang-bar">
+  <div class="logo-nav">
+    <img src="logo.png" alt="EmiSea logo">
+  </div>
+  <nav>
+    <a href="#plans"><span data-lang-inline="en">Plans</span><span data-lang-inline="hr">Planovi</span></a>
+    <a href="#features"><span data-lang-inline="en">Features</span><span data-lang-inline="hr">Značajke</span></a>
+    <a href="#how"><span data-lang-inline="en">How It Works</span><span data-lang-inline="hr">Kako radi</span></a>
+    <a href="#contact"><span data-lang-inline="en">Contact</span><span data-lang-inline="hr">Kontakt</span></a>
+  </nav>
+  <div class="lang-btns">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('hr')">HR</button>
+  </div>
+  <button class="btn-demo" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+    <span data-lang-inline="en">Book a Demo</span><span data-lang-inline="hr">Rezerviraj Demo</span>
+  </button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-ship"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">
+        <div class="pulse-dot"></div>
+        <span data-lang-inline="en">EU MRV · ETS · FuelEU Maritime</span>
+        <span data-lang-inline="hr">EU MRV · ETS · FuelEU Maritime</span>
+      </div>
+      <h1 data-lang="en">The Complete EU Shipping <em>Compliance Platform.</em></h1>
+      <h1 data-lang="hr">Kompletna EU Platforma za <em>Brodsku Sukladnost.</em></h1>
+      <p class="hero-sub" data-lang="en">From voyage data entry to verified MRV reports, ETS allowances, and FuelEU compliance — all in one platform. Online and offline.</p>
+      <p class="hero-sub" data-lang="hr">Od unosa podataka o plovidbi do verificiranih MRV izvještaja, ETS kvota i FuelEU sukladnosti — sve na jednoj platformi. Online i offline.</p>
+      <div class="hero-ctas">
+        <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+          <span data-lang-inline="en">Get Started Free</span><span data-lang-inline="hr">Počnite Besplatno</span>
+        </button>
+        <button class="btn-secondary" onclick="document.getElementById('plans').scrollIntoView({behavior:'smooth'})">
+          <span data-lang-inline="en">See Plans</span><span data-lang-inline="hr">Pogledajte Planove</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- CALCULATOR CARD -->
+    <div class="hero-card">
+      <h3>
+        <span data-lang-inline="en">Calculate Your Voyage Emissions &amp; ETS Cost</span>
+        <span data-lang-inline="hr">Izračunajte Emisije i ETS Trošak</span>
+      </h3>
+      <div class="calc-row">
+        <div class="calc-field">
+          <label><span data-lang-inline="en">Fuel Consumed (Metric Tons)</span><span data-lang-inline="hr">Potrošeno Gorivo (Metričke Tone)</span></label>
+          <div class="fuel-input-wrap">
+            <div class="fuel-slider-row">
+              <input type="range" id="fuelRange" min="10" max="1000" value="250" oninput="onSlider()">
+              <input type="number" id="fuelNum" class="fuel-number-input" value="250" min="1" oninput="onManualInput()">
+            </div>
+            <span class="fuel-hint">
+              <span data-lang-inline="en">Slider capped at 1 000 t — type any value above</span>
+              <span data-lang-inline="hr">Klizač do 1 000 t — upišite veći broj ručno</span>
+            </span>
+          </div>
+        </div>
+        <div class="calc-field">
+          <label><span data-lang-inline="en">Fuel Type</span><span data-lang-inline="hr">Vrsta Goriva</span></label>
+          <select id="fuelType" onchange="calcEmissions()">
+            <option value="3.17">VLSFO</option>
+            <option value="3.21">HFO</option>
+            <option value="2.75">LNG</option>
+            <option value="3.15">MGO</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label><span data-lang-inline="en">Voyage Route</span><span data-lang-inline="hr">Ruta Putovanja</span></label>
+          <select id="voyageRoute" onchange="calcEmissions()">
+            <option value="1.0" data-en="Within EEA (100%)"  data-hr="Unutar EEA (100%)">Within EEA (100%)</option>
+            <option value="0.5" data-en="EU / Non-EU (50%)"  data-hr="EU / Ne-EU (50%)">EU / Non-EU (50%)</option>
+            <option value="0.0" data-en="Outside EEA (0%)"   data-hr="Izvan EEA (0%)">Outside EEA (0%)</option>
+          </select>
+        </div>
+        <div class="calc-result">
+          <div class="result-row">
+            <span><span data-lang-inline="en">Total CO₂</span><span data-lang-inline="hr">Ukupno CO₂</span></span>
+            <span id="co2Result">792.5 t</span>
+          </div>
+          <div class="result-row">
+            <span><span data-lang-inline="en">ETS Factor</span><span data-lang-inline="hr">ETS Faktor</span></span>
+            <span id="etsFactor">100%</span>
+          </div>
+          <div class="result-total">
+            <span><span data-lang-inline="en">Est. ETS Cost (€65/t)</span><span data-lang-inline="hr">Proc. ETS Trošak (€65/t)</span></span>
+            <strong id="etsCost">€51.513</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <span><span data-lang-inline="en">Annex II Compliant</span><span data-lang-inline="hr">Annex II Sukladno</span></span>
+    </div>
+    <div class="trust-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+      <span><span data-lang-inline="en">Bureau Veritas Verified</span><span data-lang-inline="hr">Bureau Veritas Verificirano</span></span>
+    </div>
+    <div class="trust-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+      <span><span data-lang-inline="en">EU ETS Compliant</span><span data-lang-inline="hr">EU ETS Sukladno</span></span>
+    </div>
+    <div class="trust-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+      <span><span data-lang-inline="en">5-Year Digital Archive</span><span data-lang-inline="hr">5-Godišnji Digitalni Arhiv</span></span>
+    </div>
+    <div class="trust-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+      <span><span data-lang-inline="en">THETIS-MRV Integration</span><span data-lang-inline="hr">THETIS-MRV Integracija</span></span>
+    </div>
+    <div class="trust-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636a9 9 0 010 12.728M15.536 8.464a5 5 0 010 7.072M6.343 6.343a9 9 0 000 12.728M9.172 9.172a5 5 0 000 7.07M12 12h.01"/></svg>
+      <span><span data-lang-inline="en">Works Offline (PWA)</span><span data-lang-inline="hr">Radi Offline (PWA)</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- DEVELOPMENT PROGRESS -->
+<div class="dev-progress">
+  <div class="dev-progress-inner">
+    <p class="dev-progress-label">
+      <span data-lang-inline="en">Development Status</span>
+      <span data-lang-inline="hr">Status Razvoja</span>
+    </p>
+    <p class="dev-progress-sub" id="devProgressSub"></p>
+    <div class="progress-track" id="progressTrack">
+      <div class="progress-line-bg"></div>
+      <div class="progress-line-fill" id="progressFill"></div>
+      <!-- steps injected by JS -->
+    </div>
+    <div class="roadmap-toggle" id="roadmapToggle" onclick="toggleRoadmap()">
+      <span><span data-lang-inline="en">Roadmap Details</span><span data-lang-inline="hr">Detalji Roadmape</span></span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="roadmap-panel" id="roadmapPanel">
+      <ul class="roadmap-list" id="roadmapList"></ul>
+    </div>
+  </div>
+</div>
+
+<!-- PLANS -->
+<section id="plans" class="plans-section">
+  <div class="section-inner">
+    <p class="section-label"><span data-lang-inline="en">Plans</span><span data-lang-inline="hr">Planovi</span></p>
+    <h2 class="section-title" data-lang="en">Choose the Right Plan for Your Fleet</h2>
+    <h2 class="section-title" data-lang="hr">Odaberite Pravi Plan za Vašu Flotu</h2>
+    <p class="section-sub" data-lang="en">Whether you need internal tracking or full EU regulatory compliance — EmiSea covers both. Contact us for pricing tailored to your fleet size.</p>
+    <p class="section-sub" data-lang="hr">Trebate li interno praćenje ili punu EU regulatornu sukladnost — EmiSea pokriva oboje. Kontaktirajte nas za cijenu prilagođenu vašoj floti.</p>
+
+    <div class="plans-grid">
+
+      <!-- TRACKER -->
+      <div class="plan-card">
+        <div class="plan-badge tracker" style="background:rgba(56,189,248,0.12);border-color:rgba(56,189,248,0.25);color:var(--sky)">
+          <span data-lang-inline="en">EmiSea Tracker</span><span data-lang-inline="hr">EmiSea Tracker</span>
+        </div>
+        <h3 data-lang="en">Internal Emissions Tracking</h3>
+        <h3 data-lang="hr">Interno Praćenje Emisija</h3>
+        <p class="plan-desc" data-lang="en">Ideal for vessels under 5,000 GT, charter companies, and ship managers who want real-time voyage tracking without the full compliance workflow.</p>
+        <p class="plan-desc" data-lang="hr">Idealno za brodove ispod 5.000 GT, charter kompanije i ship managere koji žele praćenje plovidbi u stvarnom vremenu bez pune compliance procedure.</p>
+        <ul class="plan-features">
+          <li><span class="check">✓</span><span data-lang-inline="en">Voyage data entry (online + offline)</span><span data-lang-inline="hr">Unos voyage podataka (online + offline)</span></li>
+          <li><span class="check">✓</span><span data-lang-inline="en">Unofficial voyage report per trip (1–3 pages)</span><span data-lang-inline="hr">Neslužbeni voyage izvještaj po plovidbi (1–3 str.)</span></li>
+          <li><span class="check">✓</span><span data-lang-inline="en">Emissions dashboard & ETS projection</span><span data-lang-inline="hr">Dashboard emisija i ETS projekcija</span></li>
+          <li><span class="check">✓</span><span data-lang-inline="en">Real-time CO₂ and ETS cost per voyage</span><span data-lang-inline="hr">CO₂ i ETS trošak po plovidbi u stvarnom vremenu</span></li>
+          <li><span class="check">✓</span><span data-lang-inline="en">Unlimited users & roles</span><span data-lang-inline="hr">Neograničen broj korisnika i uloga</span></li>
+          <li><span class="check">✓</span><span data-lang-inline="en">Offline support (PWA)</span><span data-lang-inline="hr">Offline podrška (PWA)</span></li>
+          <li class="muted-item"><span class="cross">✗</span><span data-lang-inline="en">Annual MRV Annex II report</span><span data-lang-inline="hr">Godišnji MRV Annex II izvještaj</span></li>
+          <li class="muted-item"><span class="cross">✗</span><span data-lang-inline="en">THETIS-MRV submission</span><span data-lang-inline="hr">Slanje na THETIS-MRV</span></li>
+          <li class="muted-item"><span class="cross">✗</span><span data-lang-inline="en">5-year legal archive</span><span data-lang-inline="hr">5-godišnja pravna arhiva</span></li>
+        </ul>
+        <div class="plan-addons">
+          <p><span data-lang-inline="en">Optional add-on</span><span data-lang-inline="hr">Opcionalni dodatak</span></p>
+          <span class="addon-tag">AI <span data-lang-inline="en">Copilot</span><span data-lang-inline="hr">Kopilot</span></span>
+        </div>
+        <button class="btn-large secondary" style="margin-top:1.5rem" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+          <span data-lang-inline="en">Contact Us</span><span data-lang-inline="hr">Kontaktirajte Nas</span>
+        </button>
+      </div>
+
+      <!-- COMPLIANCE -->
+      <div class="plan-card featured">
+        <div class="plan-badge hot">
+          <span data-lang-inline="en">EmiSea Compliance</span><span data-lang-inline="hr">EmiSea Compliance</span>
+        </div>
+        <h3 data-lang="en">Full EU Regulatory Compliance</h3>
+        <h3 data-lang="hr">Puna EU Regulatorna Sukladnost</h3>
+        <p class="plan-desc" data-lang="en">The complete solution for shipping companies legally obligated under EU ETS and IMO MRV. From voyage entry to verified THETIS-MRV submission. Tracker included free.</p>
+        <p class="plan-desc" data-lang="hr">Potpuno rješenje za brodare sa zakonskom obvezom prema EU ETS i IMO MRV. Od unosa do verificiranog slanja na THETIS-MRV. Tracker uključen gratis.</p>
+        <ul class="plan-features">
+          <li><span class="check">✓</span><span data-lang-inline="en">Everything in Tracker</span><span data-lang-inline="hr">Sve iz Trackera</span></li>
+          <li><span class="check">✓</span><span data-lang-inline="en">Annual MRV Emission Report (Annex II)</span><span data-lang-inline="hr">Godišnji MRV izvještaj o emisijama (Annex II)</span></li>
+          <li><span class="check">✓</span><span data-lang-inline="en">ETS calculation & classification</span><span data-lang-inline="hr">ETS izračun i razvrstavanje</span></li>
+          <li><span class="check">✓</span><span data-lang-inline="en">Automatic verifier submission & THETIS-MRV</span><span data-lang-inline="hr">Automatsko slanje verificatoru i THETIS-MRV</span></li>
+          <li><span class="check">✓</span><span data-lang-inline="en">Company Level Report (Annex IV)</span><span data-lang-inline="hr">Company Level Report (Annex IV)</span></li>
+          <li><span class="check">✓</span><span data-lang-inline="en">5-year legal archive (SHA-256 + AES-256)</span><span data-lang-inline="hr">5-godišnja pravna arhiva (SHA-256 + AES-256)</span></li>
+          <li><span class="check">✓</span><span data-lang-inline="en">ZIP inspection export package</span><span data-lang-inline="hr">ZIP export paket za inspekciju</span></li>
+          <li><span class="check">✓</span><span data-lang-inline="en">Monitoring & Management Plan (MMP)</span><span data-lang-inline="hr">Plan praćenja i upravljanja (MMP)</span></li>
+          <li><span class="check">✓</span><span data-lang-inline="en">Full audit log</span><span data-lang-inline="hr">Kompletni audit log</span></li>
+        </ul>
+        <div class="plan-addons">
+          <p><span data-lang-inline="en">Premium add-ons</span><span data-lang-inline="hr">Premium dodaci</span></p>
+          <span class="addon-tag">FuelEU Maritime</span>
+          <span class="addon-tag">AI <span data-lang-inline="en">Copilot</span><span data-lang-inline="hr">Kopilot</span></span>
+        </div>
+        <button class="btn-large primary" style="margin-top:1.5rem" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+          <span data-lang-inline="en">Contact Us</span><span data-lang-inline="hr">Kontaktirajte Nas</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-inner">
+    <p class="section-label"><span data-lang-inline="en">Platform Features</span><span data-lang-inline="hr">Značajke Platforme</span></p>
+    <h2 class="section-title" data-lang="en">Everything Built Into <em style="color:var(--teal-light);font-style:normal">One Platform</em></h2>
+    <h2 class="section-title" data-lang="hr">Sve Ugrađeno u <em style="color:var(--teal-light);font-style:normal">Jednu Platformu</em></h2>
+    <p class="section-sub" data-lang="en">Purpose-built for shipping companies. Every feature is designed around real operational and regulatory needs.</p>
+    <p class="section-sub" data-lang="hr">Dizajnirano za brodare. Svaka značajka je izgrađena oko stvarnih operativnih i regulatornih potreba.</p>
+
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <h4 data-lang="en">Annex II Compliant Reports</h4>
+        <h4 data-lang="hr">Annex II Sukladna Izvješća</h4>
+        <div class="fc-body" data-lang="en">Auto-generated MRV Annual Emission Reports covering Parts A–E plus voyage-by-voyage annex. Includes regulatory reference document with all formulas and audit trail.</div>
+        <div class="fc-body" data-lang="hr">Automatski generirani MRV godišnji izvještaji koji pokrivaju dijelove A–E plus voyage-by-voyage prilog. Uključuje regulatorni dokument s formulama i audit trailom.</div>
+        <span class="feature-tag compliance">Compliance</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M9 17H7A5 5 0 017 7h2M15 7h2a5 5 0 010 10h-2M8 12h8"/></svg></div>
+        <h4 data-lang="en">THETIS-MRV Integration</h4>
+        <h4 data-lang="hr">THETIS-MRV Integracija</h4>
+        <div class="fc-body" data-lang="en">Direct electronic submission to the EMSA THETIS-MRV portal. Auto-retry every 3 hours (max 10 attempts) with manual retry from dashboard.</div>
+        <div class="fc-body" data-lang="hr">Direktno elektroničko slanje na EMSA THETIS-MRV portal. Auto-retry svakih 3 sata (max 10 pokušaja) s ručnim retryjom s dashboarda.</div>
+        <span class="feature-tag compliance">Compliance</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h4 data-lang="en">Offline Support (PWA)</h4>
+        <h4 data-lang="hr">Offline Podrška (PWA)</h4>
+        <div class="fc-body" data-lang="en">Works without internet. Data stored in IndexedDB and auto-synced via Background Sync API when connection returns. Conflict resolution built in.</div>
+        <div class="fc-body" data-lang="hr">Radi bez interneta. Podaci se pohranjuju u IndexedDB i automatski sinkroniziraju kad se veza vrati. Ugrađeno rješavanje konflikata.</div>
+        <span class="feature-tag all"><span data-lang-inline="en">All plans</span><span data-lang-inline="hr">Svi planovi</span></span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+        <h4 data-lang="en">Voyage Report Per Trip</h4>
+        <h4 data-lang="hr">Voyage Izvještaj po Plovidbi</h4>
+        <div class="fc-body" data-lang="en">Unofficial 1–3 page internal report generated automatically after each voyage. Includes fuel, BDN, CO₂, ETS cost, YTD cumulative, and Chief Engineer signature.</div>
+        <div class="fc-body" data-lang="hr">Neslužbeni interni izvještaj od 1–3 stranice generiran automatski nakon svake plovidbe. Uključuje gorivo, BDN, CO₂, ETS trošak, YTD kumulativ i potpis Chief Engineera.</div>
+        <span class="feature-tag all"><span data-lang-inline="en">All plans</span><span data-lang-inline="hr">Svi planovi</span></span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 8v4l3 3"/></svg></div>
+        <h4 data-lang="en">Deadline & Notification System</h4>
+        <h4 data-lang="hr">Sustav Rokova i Obavijesti</h4>
+        <div class="fc-body" data-lang="en">Automated reminders for MRV submission (30 Apr), EUA surrender (30 Sep), verifier follow-up, and DoC expiry. Critical alerts escalate 30, 15 and 10 days before deadlines.</div>
+        <div class="fc-body" data-lang="hr">Automatski podsjetnici za MRV predaju (30. tra), predaju EUA (30. ruj), praćenje verificatora i istek DoC-a. Kritična upozorenja eskaliraju 30, 15 i 10 dana prije rokova.</div>
+        <span class="feature-tag compliance">Compliance</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+        <h4 data-lang="en">Smart Data Validation</h4>
+        <h4 data-lang="hr">Pametna Validacija Podataka</h4>
+        <div class="fc-body" data-lang="en">Blocks invalid entries (zero fuel, same port, past arrival date). Warns on fuel consumption >20% above route average and duplicate BDN numbers.</div>
+        <div class="fc-body" data-lang="hr">Blokira nevažeće unose (nula goriva, ista luka, datum dolaska u prošlosti). Upozorava na potrošnju >20% iznad prosjeka rute i duplikate BDN brojeva.</div>
+        <span class="feature-tag all"><span data-lang-inline="en">All plans</span><span data-lang-inline="hr">Svi planovi</span></span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M5 2h14a1 1 0 011 1v18l-8-3-8 3V3a1 1 0 011-1z"/></svg></div>
+        <h4 data-lang="en">5-Year Legal Archive</h4>
+        <h4 data-lang="hr">5-Godišnja Pravna Arhiva</h4>
+        <div class="fc-body" data-lang="en">All reports, voyage data, audit logs, DoC documents, and MMP plans stored with SHA-256 integrity hashes and AES-256 encryption. ZIP export for inspections.</div>
+        <div class="fc-body" data-lang="hr">Svi izvještaji, voyage podaci, audit logovi, DoC dokumenti i MMP planovi pohranjeni s SHA-256 hash integritetom i AES-256 enkripcijom. ZIP export za inspekcije.</div>
+        <span class="feature-tag compliance">Compliance</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M3 17l4-8 4 4 4-6 4 10"/><path d="M3 21h18"/></svg></div>
+        <h4 data-lang="en">FuelEU Maritime Module</h4>
+        <h4 data-lang="hr">FuelEU Maritime Modul</h4>
+        <div class="fc-body" data-lang="en">Well-to-Wake GHG intensity tracking per voyage. Compliance Balance in tGHG and EUR. FuelEU Health Bar (green/yellow/red). Pooling calculator. Annual FuelEU Report.</div>
+        <div class="fc-body" data-lang="hr">Well-to-Wake praćenje GHG intenziteta po plovidbi. Compliance Balance u tGHG i EUR. FuelEU Health Bar (zelena/žuta/crvena). Pooling kalkulator. Godišnji FuelEU izvještaj.</div>
+        <span class="feature-tag premium">Premium</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <h4 data-lang="en">AI Copilot</h4>
+        <h4 data-lang="hr">AI Kopilot</h4>
+        <div class="fc-body" data-lang="en">Local LLM (Mistral 7B / Llama 3.1 8B) via Ollama. Zero API costs. Data never leaves your server — GDPR compliant. Knows your fleet data, deadlines, and MRV/ETS/FuelEU regulations.</div>
+        <div class="fc-body" data-lang="hr">Lokalni LLM (Mistral 7B / Llama 3.1 8B) putem Ollame. Nula API troškova. Podaci ne napuštaju vaš server — GDPR sukladno. Poznaje podatke vaše flote, rokove i MRV/ETS/FuelEU regulativu.</div>
+        <span class="feature-tag premium">Premium</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="how-section">
+  <div class="section-inner">
+    <p class="section-label"><span data-lang-inline="en">Process</span><span data-lang-inline="hr">Proces</span></p>
+    <h2 class="section-title" data-lang="en">From Voyage Data to Verified Report</h2>
+    <h2 class="section-title" data-lang="hr">Od Voyage Podataka do Verificiranog Izvještaja</h2>
+    <p class="section-sub" data-lang="en">Five simple steps — from data entry to THETIS-MRV submission, all automated.</p>
+    <p class="section-sub" data-lang="hr">Pet jednostavnih koraka — od unosa podataka do slanja na THETIS-MRV, sve automatizirano.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4 data-lang="en">Input Voyage Data</h4>
+        <h4 data-lang="hr">Unesite Voyage Podatke</h4>
+        <p data-lang="en">Fuel, route, cargo, BDN number. Auto-detects EU/non-EU route and ETS factor. Works online and offline.</p>
+        <p data-lang="hr">Gorivo, ruta, teret, BDN broj. Automatski detektira EU/non-EU rutu i ETS faktor. Radi online i offline.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4 data-lang="en">Validate & Calculate</h4>
+        <h4 data-lang="hr">Validacija i Izračun</h4>
+        <p data-lang="en">Smart validation checks data. Python service calculates TtW emissions, ETS allowances, and FuelEU GHG intensity.</p>
+        <p data-lang="hr">Pametna validacija provjerava podatke. Python servis izračunava TtW emisije, ETS kvote i FuelEU GHG intenzitet.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4 data-lang="en">Generate Reports</h4>
+        <h4 data-lang="hr">Generirajte Izvještaje</h4>
+        <p data-lang="en">Annex II MRV report, regulatory document, and voyage report generated as PDFs. Mandatory review before archiving.</p>
+        <p data-lang="hr">Annex II MRV izvještaj, regulatorni dokument i voyage izvještaj generiraju se kao PDF-ovi. Obavezni pregled prije arhiviranja.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4 data-lang="en">Send to Verifier</h4>
+        <h4 data-lang="hr">Pošaljite Verificatoru</h4>
+        <p data-lang="en">Automatic email to Bureau Veritas, DNV or Lloyd's. Upload Document of Compliance when received.</p>
+        <p data-lang="hr">Automatski email Bureau Veritasu, DNV-u ili Lloyd'su. Uploadajte Document of Compliance kada stigne.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <h4 data-lang="en">Submit to THETIS-MRV</h4>
+        <h4 data-lang="hr">Pošaljite na THETIS-MRV</h4>
+        <p data-lang="en">Electronic submission to EMSA portal. THETIS reference number saved. All documents archived for 5 years.</p>
+        <p data-lang="hr">Elektroničko slanje na EMSA portal. THETIS referentni broj pohranjen. Svi dokumenti arhivirani 5 godina.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USER ROLES -->
+<section class="roles-section">
+  <div class="section-inner">
+    <p class="section-label"><span data-lang-inline="en">Access Control</span><span data-lang-inline="hr">Kontrola Pristupa</span></p>
+    <h2 class="section-title" data-lang="en">5 Roles, <em style="color:var(--teal-light);font-style:normal">One Platform</em></h2>
+    <h2 class="section-title" data-lang="hr">5 Uloga, <em style="color:var(--teal-light);font-style:normal">Jedna Platforma</em></h2>
+    <p class="section-sub" data-lang="en">The Shipowner can work completely solo — all other roles are optional delegation. Granular permissions for every action.</p>
+    <p class="section-sub" data-lang="hr">Vlasnik broda može raditi potpuno solo — sve ostale uloge su opcionalno delegiranje. Granularna prava za svaku akciju.</p>
+    <div class="roles-grid">
+      <div class="role-card">
+        <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <h4>Shipowner</h4>
+        <p data-lang="en">Full control. Manages subscription, assigns roles, approves everything.</p>
+        <p data-lang="hr">Puna kontrola. Upravlja pretplatom, dodjeljuje uloge, odobrava sve.</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h4>DPA</h4>
+        <p data-lang="en">Approves and submits reports. Manages all vessels and users.</p>
+        <p data-lang="hr">Odobrava i šalje izvještaje. Upravlja svim brodovima i korisnicima.</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg></div>
+        <h4>Fleet Manager</h4>
+        <p data-lang="en">Manages fleet and voyages. Generates reports. Cannot submit to verifier.</p>
+        <p data-lang="hr">Upravlja flotom i voyagima. Generira izvještaje. Ne može slati na ovjeru.</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/><path d="M15.54 8.46a5 5 0 010 7.07M8.46 8.46a5 5 0 000 7.07"/></svg></div>
+        <h4>Chief Engineer</h4>
+        <p data-lang="en">Enters voyage data for their assigned vessel. Limited view.</p>
+        <p data-lang="hr">Unosi voyage podatke za dodijeljeni brod. Ograničeni pregled.</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h4>Viewer</h4>
+        <p data-lang="en">Read-only access to reports and dashboard. For management and auditors.</p>
+        <p data-lang="hr">Samo pregled izvještaja i dashboarda. Za management i vanjske revizore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<section>
+  <div class="section-inner">
+    <div class="compliance-grid">
+      <div>
+        <p class="section-label"><span data-lang-inline="en">Regulatory Coverage</span><span data-lang-inline="hr">Regulatorna Pokrivenost</span></p>
+        <h2 class="section-title" data-lang="en">Every Relevant <em style="color:var(--teal-light);font-style:normal">EU & IMO Regulation</em></h2>
+        <h2 class="section-title" data-lang="hr">Sve Relevantne <em style="color:var(--teal-light);font-style:normal">EU & IMO Regulative</em></h2>
+        <p class="section-sub" data-lang="en">EmiSea is built from the ground up around the actual regulatory texts — not approximations.</p>
+        <p class="section-sub" data-lang="hr">EmiSea je izgrađen od temelja oko stvarnih regulatornih tekstova — ne aproksimacija.</p>
+      </div>
+      <div class="compliance-badges">
+        <div class="badge-item">
+          <div class="badge-dot"></div>
+          <div class="badge-text">
+            <h5 data-lang="en">EU MRV — Regulation (EU) 2015/757</h5>
+            <h5 data-lang="hr">EU MRV — Uredba (EU) 2015/757</h5>
+            <div class="bdesc" data-lang="en">Full Annex II compliant reporting. Monitoring plan generation, Parts A–E, voyage annex, energy efficiency indicators.</div>
+            <div class="bdesc" data-lang="hr">Potpuno Annex II sukladno izvještavanje. Generiranje plana praćenja, dijelovi A–E, voyage prilog, indikatori energetske učinkovitosti.</div>
+          </div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-dot"></div>
+          <div class="badge-text">
+            <h5 data-lang="en">EU ETS — Directive 2003/87/EC</h5>
+            <h5 data-lang="hr">EU ETS — Direktiva 2003/87/EC</h5>
+            <div class="bdesc" data-lang="en">Phase-in tracking (70% 2025, 100% 2026+). Intra-EU/EU-OUT/NON-EU-IN classification. EUA allowance calculation and Union Registry aggregation (Points 1.1–1.7).</div>
+            <div class="bdesc" data-lang="hr">Praćenje phase-in (70% 2025, 100% 2026+). Razvrstavanje Intra-EU/EU-OUT/NON-EU-IN. Izračun EUA kvota i agregacija Union Registrya (Točke 1.1–1.7).</div>
+          </div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-dot"></div>
+          <div class="badge-text">
+            <h5 data-lang="en">FuelEU Maritime — Regulation (EU) 2023/1805</h5>
+            <h5 data-lang="hr">FuelEU Maritime — Uredba (EU) 2023/1805</h5>
+            <div class="bdesc" data-lang="en">Well-to-Wake GHG intensity calculation. Annual limits from 91.16 gCO₂eq/MJ (2025) to 4.56 (2050). Penalty: €2,400/tCO₂eq deficit. Pooling calculator.</div>
+            <div class="bdesc" data-lang="hr">Well-to-Wake izračun GHG intenziteta. Godišnji limiti od 91.16 gCO₂eq/MJ (2025) do 4.56 (2050). Kazna: €2.400/tCO₂eq deficita. Pooling kalkulator.</div>
+          </div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-dot"></div>
+          <div class="badge-text">
+            <h5 data-lang="en">Impl. Regulation (EU) 2023/2449 — Annex II</h5>
+            <h5 data-lang="hr">Provedbena Uredba (EU) 2023/2449 — Annex II</h5>
+            <div class="bdesc" data-lang="en">Electronic template compliance for THETIS-MRV. CH₄ and N₂O inclusion per IPCC AR5 GWP100. Company Level Report (Annex IV).</div>
+            <div class="bdesc" data-lang="hr">Sukladnost elektroničkog predloška za THETIS-MRV. Uključivanje CH₄ i N₂O prema IPCC AR5 GWP100. Company Level Report (Annex IV).</div>
+          </div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-dot"></div>
+          <div class="badge-text">
+            <h5 data-lang="en">Bureau Veritas / DNV / Lloyd's Verified</h5>
+            <h5 data-lang="hr">Bureau Veritas / DNV / Lloyd's Verificirano</h5>
+            <div class="bdesc" data-lang="en">Direct integration with accredited EU MRV verifiers. Automatic PDF delivery, DoC upload workflow, auto-retry on failure.</div>
+            <div class="bdesc" data-lang="hr">Direktna integracija s akreditiranim EU MRV verificatorima. Automatska dostava PDF-a, DoC upload workflow, auto-retry pri neuspjehu.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="cta-section">
+  <div class="section-inner">
+    <p class="section-label" style="text-align:center"><span data-lang-inline="en">Get in Touch</span><span data-lang-inline="hr">Kontaktirajte Nas</span></p>
+    <h2 class="section-title" data-lang="en">Ready to Automate Your <em style="color:var(--teal-light);font-style:normal">Compliance?</em></h2>
+    <h2 class="section-title" data-lang="hr">Spremni za Automatizaciju <em style="color:var(--teal-light);font-style:normal">Sukladnosti?</em></h2>
+    <p class="section-sub" data-lang="en">Book a free demo or request a custom quote. Our team responds within 24 hours.</p>
+    <p class="section-sub" data-lang="hr">Rezervirajte besplatni demo ili zatražite prilagođenu ponudu. Naš tim odgovara unutar 24 sata.</p>
+
+    <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="submitForm(event)">
+      <input type="hidden" name="access_key" value="8f9b2e48-5052-41b0-9ff9-3dc23741edc2">
+      <input type="hidden" name="subject" value="EmiSea – New Contact Form Submission">
+      <input type="hidden" name="redirect" value="false">
+      <div class="form-row">
+        <div class="form-field">
+          <label><span data-lang-inline="en">First Name</span><span data-lang-inline="hr">Ime</span></label>
+          <input type="text" name="first_name" placeholder="John" required>
+        </div>
+        <div class="form-field">
+          <label><span data-lang-inline="en">Last Name</span><span data-lang-inline="hr">Prezime</span></label>
+          <input type="text" name="last_name" placeholder="Smith" required>
+        </div>
+      </div>
+      <div class="form-field">
+        <label><span data-lang-inline="en">Company / Shipping Company</span><span data-lang-inline="hr">Tvrtka / Brodarska Kompanija</span></label>
+        <input type="text" name="company" placeholder="Adriatic Shipping Ltd." required>
+      </div>
+      <div class="form-field">
+        <label><span data-lang-inline="en">Email Address</span><span data-lang-inline="hr">Email Adresa</span></label>
+        <input type="email" name="email" placeholder="john@company.com" required>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label><span data-lang-inline="en">Number of Vessels</span><span data-lang-inline="hr">Broj Brodova</span></label>
+          <select name="number_of_vessels">
+            <option>1–5</option>
+            <option>6–20</option>
+            <option>21–50</option>
+            <option>50+</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label><span data-lang-inline="en">Enquiry Type</span><span data-lang-inline="hr">Vrsta Upita</span></label>
+          <select name="enquiry_type">
+            <option data-en="Request a Quote"  data-hr="Zatražite Ponudu">Request a Quote</option>
+            <option data-en="Book a Demo"      data-hr="Rezervirajte Demo">Book a Demo</option>
+            <option data-en="General Question" data-hr="Opće Pitanje">General Question</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-field">
+        <label><span data-lang-inline="en">Message (optional)</span><span data-lang-inline="hr">Poruka (opcionalno)</span></label>
+        <textarea name="message" placeholder="Tell us about your fleet and compliance needs..."></textarea>
+      </div>
+      <button type="submit" class="btn-large primary">
+        <span data-lang-inline="en">Send Message</span><span data-lang-inline="hr">Pošaljite Poruku</span>
+      </button>
+    </form>
+    <div class="form-success" id="formSuccess">
+      <span data-lang-inline="en">✓ Thank you! We'll be in touch within 24 hours.</span>
+      <span data-lang-inline="hr">✓ Hvala! Javit ćemo vam se unutar 24 sata.</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="logo.png" alt="EmiSea logo">
+    </div>
+    <div class="footer-links">
+      <a href="#plans"><span data-lang-inline="en">Plans</span><span data-lang-inline="hr">Planovi</span></a>
+      <a href="#features"><span data-lang-inline="en">Features</span><span data-lang-inline="hr">Značajke</span></a>
+      <a href="#contact"><span data-lang-inline="en">Contact</span><span data-lang-inline="hr">Kontakt</span></a>
+      <a href="#">emisea.eu</a>
+    </div>
+    <p class="footer-copy">© 2026 EmiSea. <span data-lang-inline="en">All rights reserved.</span><span data-lang-inline="hr">Sva prava zadržana.</span></p>
+  </div>
+</footer>
+
+<script>
+/* ╔══════════════════════════════════════════════════════╗
+   ║  PROMIJENI OVU VARIJABLU ZA TRENUTNU FAZU (1-9)    ║
+   ╚══════════════════════════════════════════════════════╝ */
+const CURRENT_PHASE = 1;
+
+/* ── DEV PROGRESS BAR ────────────────────────────────── */
+(function() {
+  const phases = [
+    { en: 'Infrastructure',         hr: 'Infrastruktura' },
+    { en: 'Database & Models',      hr: 'Baza i Modeli' },
+    { en: 'Auth & Users',           hr: 'Auth i Korisnici' },
+    { en: 'Fleet & PDF (MVP)',      hr: 'Flota i PDF (MVP)' },
+    { en: 'Dashboard & Archive',    hr: 'Dashboard i Arhiva' },
+    { en: 'Distribution',           hr: 'Distribucija' },
+    { en: 'Notifications & Audit',  hr: 'Obavijesti i Audit' },
+    { en: 'AI Copilot',             hr: 'AI Kopilot' },
+    { en: 'FuelEU Maritime',        hr: 'FuelEU Maritime' }
+  ];
+
+  const track = document.getElementById('progressTrack');
+  const fill  = document.getElementById('progressFill');
+  const sub   = document.getElementById('devProgressSub');
+
+  phases.forEach(function(p, i) {
+    const n = i + 1;
+    const state = n < CURRENT_PHASE ? 'done' : n === CURRENT_PHASE ? 'active' : '';
+    const step = document.createElement('div');
+    step.className = 'progress-step ' + state;
+    step.innerHTML =
+      '<div class="progress-dot">' + n + '</div>' +
+      '<span class="progress-step-label">' +
+        '<span data-lang-inline="en">' + p.en + '</span>' +
+        '<span data-lang-inline="hr">' + p.hr + '</span>' +
+      '</span>';
+    track.appendChild(step);
+  });
+
+  // fill line width
+  var pct = ((CURRENT_PHASE - 1) / (phases.length - 1)) * 100;
+  var maxW = 'calc(' + pct + '% - 0px)';
+  fill.style.width = maxW;
+
+  // subtitle
+  var currentLabel = phases[CURRENT_PHASE - 1];
+  sub.innerHTML =
+    '<span data-lang-inline="en">Phase <strong>' + CURRENT_PHASE + ' of 9</strong> — ' + currentLabel.en + '</span>' +
+    '<span data-lang-inline="hr">Faza <strong>' + CURRENT_PHASE + ' od 9</strong> — ' + currentLabel.hr + '</span>';
+
+  // re-apply current language visibility
+  var body = document.body;
+  var lang = body.className.indexOf('lang-hr') !== -1 ? 'hr' : 'en';
+  setLangOnProgress(lang);
+
+  window._updateProgressLang = function(lang) { setLangOnProgress(lang); };
+
+  function setLangOnProgress(lang) {
+    track.querySelectorAll('[data-lang-inline]').forEach(function(el) {
+      el.style.display = el.getAttribute('data-lang-inline') === lang ? 'inline' : 'none';
+    });
+    sub.querySelectorAll('[data-lang-inline]').forEach(function(el) {
+      el.style.display = el.getAttribute('data-lang-inline') === lang ? 'inline' : 'none';
+    });
+    document.querySelectorAll('#roadmapPanel [data-lang-inline], #roadmapToggle [data-lang-inline]').forEach(function(el) {
+      el.style.display = el.getAttribute('data-lang-inline') === lang ? 'inline' : 'none';
+    });
+  }
+
+  // Roadmap descriptions
+  var roadmapDesc = [
+    { en: 'Express server, config, middleware, error handling, NGROK setup.',
+      hr: 'Express server, konfiguracija, middleware, error handling, NGROK setup.' },
+    { en: 'MySQL/Sequelize models, migrations for vessels, voyages, fuels, users.',
+      hr: 'MySQL/Sequelize modeli, migracije za brodove, voyagee, goriva, korisnike.' },
+    { en: 'Registration, login, JWT tokens, role-based access, password reset.',
+      hr: 'Registracija, login, JWT tokeni, pristup po ulogama, reset lozinke.' },
+    { en: 'Vessel & voyage CRUD, 6-step wizard, MRV/ETS calculators, PDF reports.',
+      hr: 'CRUD brodova i voyagea, 6-korakni wizard, MRV/ETS kalkulatori, PDF izvještaji.' },
+    { en: 'KPI dashboard, fleet overview, emission charts, 5-year legal archive.',
+      hr: 'KPI dashboard, pregled flote, grafovi emisija, 5-godišnja pravna arhiva.' },
+    { en: 'Verifier email delivery, THETIS-MRV submission, ZIP inspection export.',
+      hr: 'Email dostava verificatoru, slanje na THETIS-MRV, ZIP export za inspekciju.' },
+    { en: 'Deadline alerts, audit log, rate limiting, document integrity hashing.',
+      hr: 'Upozorenja na rokove, audit log, rate limiting, hash integritet dokumenata.' },
+    { en: 'Local LLM (Ollama) chatbot with fleet context, zero API cost, GDPR safe.',
+      hr: 'Lokalni LLM (Ollama) chatbot s kontekstom flote, nula API troškova, GDPR siguran.' },
+    { en: 'Well-to-Wake GHG tracking, compliance balance, penalties, pooling calculator.',
+      hr: 'Well-to-Wake GHG praćenje, compliance balance, penali, pooling kalkulator.' }
+  ];
+
+  var rmList = document.getElementById('roadmapList');
+  roadmapDesc.forEach(function(d, i) {
+    var n = i + 1;
+    var cls = n < CURRENT_PHASE ? 'rm-done' : n === CURRENT_PHASE ? 'rm-active' : '';
+    var li = document.createElement('li');
+    li.className = cls;
+    li.innerHTML =
+      '<span class="rm-num">' + n + '</span>' +
+      '<span>' +
+        '<span data-lang-inline="en">' + d.en + '</span>' +
+        '<span data-lang-inline="hr">' + d.hr + '</span>' +
+      '</span>';
+    rmList.appendChild(li);
+  });
+
+  setLangOnProgress(lang);
+})();
+
+/* ── ROADMAP TOGGLE ──────────────────────────────────── */
+function toggleRoadmap() {
+  var toggle = document.getElementById('roadmapToggle');
+  var panel  = document.getElementById('roadmapPanel');
+  var isOpen = toggle.classList.contains('open');
+  if (isOpen) {
+    panel.style.maxHeight = '0';
+    panel.classList.remove('open');
+    toggle.classList.remove('open');
+  } else {
+    panel.style.maxHeight = panel.scrollHeight + 'px';
+    panel.classList.add('open');
+    toggle.classList.add('open');
+  }
+}
+
+/* ── LANGUAGE ─────────────────────────────────────── */
+function setLang(lang) {
+  document.body.className = 'lang-' + lang;
+  document.querySelectorAll('.lang-btn').forEach(b =>
+    b.classList.toggle('active', b.textContent.trim() === lang.toUpperCase())
+  );
+  document.querySelectorAll('option[data-en]').forEach(opt =>
+    opt.textContent = opt.getAttribute('data-' + lang) || opt.getAttribute('data-en')
+  );
+  if (window._updateProgressLang) window._updateProgressLang(lang);
+}
+
+/* ── CALCULATOR ───────────────────────────────────── */
+const rangeEl = document.getElementById('fuelRange');
+const numEl   = document.getElementById('fuelNum');
+
+function onSlider() {
+  numEl.value = rangeEl.value;
+  calcEmissions();
+}
+function onManualInput() {
+  const v = parseFloat(numEl.value);
+  if (!isNaN(v) && v > 0) {
+    rangeEl.value = Math.min(v, 1000);
+    calcEmissions();
+  }
+}
+function calcEmissions() {
+  const fuel        = parseFloat(numEl.value) || 0;
+  const ef          = parseFloat(document.getElementById('fuelType').value);
+  const routeFactor = parseFloat(document.getElementById('voyageRoute').value);
+  const co2         = fuel * ef;
+  const co2Ets      = co2 * routeFactor;
+  const etsCost     = co2Ets * 65;
+  document.getElementById('co2Result').textContent = co2.toFixed(1) + ' t';
+  document.getElementById('etsFactor').textContent  = (routeFactor * 100).toFixed(0) + '%';
+  document.getElementById('etsCost').textContent    = '€' + Math.round(etsCost).toLocaleString('de-DE');
+}
+
+/* ── FORM ─────────────────────────────────────────── */
+async function submitForm(e) {
+  e.preventDefault();
+  const form = document.getElementById('contactForm');
+  const btn  = form.querySelector('button[type=submit]');
+  btn.disabled = true; btn.style.opacity = '0.7';
+  try {
+    const res  = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(form) });
+    const json = await res.json();
+    if (json.success) {
+      form.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    } else {
+      alert('Something went wrong. Please try again.');
+      btn.disabled = false; btn.style.opacity = '1';
+    }
+  } catch {
+    alert('Network error. Please try again.');
+    btn.disabled = false; btn.style.opacity = '1';
+  }
+}
+
+calcEmissions();
+</script>
+</body>
+</html>
